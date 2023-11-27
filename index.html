@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+</head>
+<body>
+    <h1>Order Management System</h1>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <h2>Add New Order</h2>
+    <form id="addOrderForm">
+        <label for="orderNumber">Order Number:</label>
+        <input type="text" id="orderNumber" name="orderNumber" required>
+        <br>
+
+        <label for="orderDate">Order Date:</label>
+        <input type="date" id="orderDate" name="orderDate" required>
+        <br>
+
+        <label for="customerId">Customer ID:</label>
+        <input type="text" id="customerId" name="customerId" required>
+        <br>
+
+        <button type="button" onclick="addOrder()">Add Order</button>
+    </form>
+
+    <h2>Search Order by CustomerID</h2>
+    <form id="searchOrderForm">
+        <label for="searchCustomerId">Customer ID:</label>
+        <input type="text" id="searchCustomerId" name="searchCustomerId" required>
+        <br>
+
+        <button type="button" onclick="searchOrderByCustomerId()">Search</button>
+    </form>
+
+    <script>
+        function addOrder() {
+            const orderNumber = document.getElementById('orderNumber').value;
+            const orderDate = document.getElementById('orderDate').value;
+            const customerId = document.getElementById('customerId').value;
+    
+            // Ajoutez Content-Type: application/json à l'en-tête
+            fetch(`http://localhost:3000/${orderNumber}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Ajout de cette ligne
+                },
+                body: JSON.stringify({ orderDate, customerId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Order added successfully:', data);
+                alert('Order added successfully!');
+            })
+            .catch(error => {
+                console.error('Error adding order:', error);
+                alert('Error adding order. Please check the console for details.');
+            });
+        }
+    </script>
+</body>
+</html>
