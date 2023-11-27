@@ -23,9 +23,9 @@ app.use(bodyParser.json());
 const client = new Pool({
     host: '127.0.0.1',
     port: 5433,
-    database: 'tpapi',
+    database: 'SQL_PG',
     user: 'postgres',
-    password: 'poiuyuiop',
+    password: 'your_pass',
 });
 
 client.connect();
